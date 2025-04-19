@@ -1,6 +1,17 @@
 # IaC
 Homelab and personal infrastructure configuration as code
 
+## Packer
+
+First, download the plugins with the command:
+packer init --var-file="../credentials.pkr.hcl" ./ubuntu-server-basic.pkr.hcl
+
+To check the files are valid use:
+packer validate --var-file="../credentials.pkr.hcl" ./ubuntu-server-basic.pkr.hcl
+
+To build the template with packer, go to the desired folder and use:
+packer build --var-file="../credentials.pkr.hcl" ./ubuntu-server-basic.pkr.hcl
+
 ## Terraform
 
 Terraform can be used to deploy VMs.
