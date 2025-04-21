@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tdarr-node
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tdarr-node
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: tdarr-node
+    spec:
+      nodeName: k8s-worker-01
+      nodeSelector:
+        worker: "true"
+      containers:
+      - image: ghcr.io/haveagitgat/tdarr_node:2.27.02
+        imagePullPolicy: Always
+        name: tdarr-node
+        resources:
+          limits:
+            cpu: "3"
+          requests:
+            cpu: "3"
+        env:
+        - name: TZ
+          value: Europe/Paris
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: UMASK_SET
+          value: "002"
+        - name: serverIP
+          value: tdarr.jelly.svc.cluster.local
+        - name: serverPort
+          value: "8266"
+        - name: inContainer
+          value: "true"
+        - name: ffmpegVersion
+          value: "6"
+        volumeMounts:
+        - mountPath: "/app/configs"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/tdarr-node/configs"
+        - mountPath: "/media/tv"
+          readOnly: false
+          name: nfs
+          subPath: "media/TVShows"
+        - mountPath: "/media/movies"
+          readOnly: false
+          name: nfs
+          subPath: "media/Films"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata

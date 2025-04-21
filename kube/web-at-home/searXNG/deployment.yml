@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: searxng
+  namespace: web-at-home
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: searxng
+  template:
+    metadata:
+      labels:
+        app: searxng
+    spec:
+      containers:
+      - name: searxng
+        image: searxng/searxng
+        env:
+        - name: BASE_URL
+          value: "http://searxng.kube.lan"
+        - name: INSTANCE_NAME
+          value: "my-instance"
+        ports:
+        - containerPort: 8080
+          name: searxng
+        volumeMounts:
+        - mountPath: "/etc/searxng"
+          readOnly: false
+          name: nfs
+          subPath: "searxng"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: web-at-home

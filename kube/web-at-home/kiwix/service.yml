@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kiwix
+  namespace: web-at-home
+spec:
+  ports:
+  - name: kiwix
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: kiwix

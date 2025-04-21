@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tdarr
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tdarr
+  template:
+    metadata:
+      labels:
+        app: tdarr
+    spec:
+      containers:
+      - image: haveagitgat/tdarr
+        imagePullPolicy: Always
+        name: tdarr
+        resources:
+          limits:
+            cpu: "3"
+          requests:
+            cpu: "3"
+        ports:
+        - containerPort: 8265
+          name: web
+          protocol: TCP
+        - containerPort: 8266
+          name: server
+          protocol: TCP
+        - containerPort: 8267
+          name: internal
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        - name: internalNode
+          value: "true"
+        volumeMounts:
+        - mountPath: "/app/configs"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/tdarr/configs"
+        - mountPath: "/app/server"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/tdarr/server"
+        - mountPath: "/media/tv"
+          readOnly: false
+          name: nfs
+          subPath: "media/TVShows"
+        - mountPath: "/media/movies"
+          readOnly: false
+          name: nfs
+          subPath: "media/Films"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata

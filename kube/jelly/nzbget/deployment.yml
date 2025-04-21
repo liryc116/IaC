@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nzbget
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nzbget
+  template:
+    metadata:
+      labels:
+        app: nzbget
+    spec:
+      containers:
+      - image: lscr.io/linuxserver/nzbget
+        imagePullPolicy: Always
+        name: nzbget
+        ports:
+        - containerPort: 6789
+          name: web
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        volumeMounts:
+        - mountPath: "/config"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/nzbget"
+        - mountPath: "/downloads"
+          readOnly: false
+          name: nfs
+          subPath: "media/Downloads"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata

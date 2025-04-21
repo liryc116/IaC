@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyseerr
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyseerr
+  template:
+    metadata:
+      labels:
+        app: jellyseerr
+    spec:
+      containers:
+      - image: fallenbagel/jellyseerr
+        imagePullPolicy: Always
+        name: jellyseerr
+        ports:
+        - containerPort: 5055
+          name: web
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        volumeMounts:
+        - mountPath: "/app/config"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/jellyseerr"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata

@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      containers:
+      - image: jellyfin/jellyfin
+        imagePullPolicy: Always
+        name: jellyfin
+        ports:
+        - containerPort: 8096
+          name: web
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        volumeMounts:
+        - mountPath: "/config"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/jellyfin"
+        - mountPath: "/Audiobooks"
+          readOnly: false
+          name: nfs
+          subPath: "media/Audiobooks"
+        - mountPath: "/Films"
+          readOnly: false
+          name: nfs
+          subPath: "media/Films"
+        - mountPath: "/TVShows"
+          readOnly: false
+          name: nfs
+          subPath: "media/TVShows"
+        - mountPath: "/Music"
+          readOnly: false
+          name: nfs
+          subPath: "media/Music"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata

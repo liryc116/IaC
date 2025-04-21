@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fresh-rss
+  namespace: web-at-home
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fresh-rss
+  template:
+    metadata:
+      labels:
+        app: fresh-rss
+    spec:
+      containers:
+      - name: fresh-rss
+        image: lscr.io/linuxserver/freshrss
+        env:
+        - name: TZ
+          value: Europe/Paris
+        ports:
+        - containerPort: 80
+          name: fresh-rss
+        volumeMounts:
+        - mountPath: "/config"
+          readOnly: false
+          name: nfs
+          subPath: "fresh-rss"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: web-at-home

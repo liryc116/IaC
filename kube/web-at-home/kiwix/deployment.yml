@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kiwix
+  namespace: web-at-home
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kiwix
+  template:
+    metadata:
+      labels:
+        app: kiwix
+    spec:
+      containers:
+      - name: kiwix
+        image: ghcr.io/kiwix/kiwix-serve
+        args: [ "*.zim" ]
+        ports:
+        - containerPort: 8080
+          name: kiwix
+        volumeMounts:
+        - mountPath: "/data"
+          readOnly: false
+          name: nfs
+          subPath: "zim"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: web-at-home

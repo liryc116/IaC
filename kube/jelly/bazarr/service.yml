@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bazarr
+  namespace: jelly
+spec:
+  ports:
+  - name: bazarr-tcp
+    port: 6767
+    protocol: TCP
+    targetPort: 6767
+  selector:
+    app: bazarr

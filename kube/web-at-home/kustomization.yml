@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: web-at-home
+  namespace: web-at-home
+  labels:
+    app: web-at-home
+resources:
+  - namespace.yml
+  - ingress.yml
+  - pv.yml
+  - pvc.yml
+    #- kiwix
+    #- maps
+  - searXNG
+  - fresh-rss
+  - glance
+  - registry
