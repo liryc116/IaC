@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: glance
+  namespace: web-at-home
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: glance
+  template:
+    metadata:
+      labels:
+        app: glance
+    spec:
+      containers:
+      - name: glance
+        image: glanceapp/glance
+        env:
+        - name: TZ
+          value: Europe/Paris
+        ports:
+        - containerPort: 8080
+          name: glance
+        volumeMounts:
+        - mountPath: "/app/config"
+          readOnly: false
+          name: nfs
+          subPath: "glance"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: web-at-home

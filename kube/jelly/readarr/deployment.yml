@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readarr
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readarr
+  template:
+    metadata:
+      labels:
+        app: readarr
+    spec:
+      nodeSelector:
+        worker: "true"
+      containers:
+      - image: lscr.io/linuxserver/readarr:develop
+        imagePullPolicy: Always
+        name: readarr
+        ports:
+        - containerPort: 8787
+          name: web
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        volumeMounts:
+        - mountPath: "/config"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/readarr"
+        - mountPath: "/books"
+          readOnly: false
+          name: nfs
+          subPath: "media/Books"
+        - mountPath: "/downloads"
+          readOnly: false
+          name: nfs
+          subPath: "media/Downloads"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata

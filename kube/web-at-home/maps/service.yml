@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: maps
+  namespace: web-at-home
+spec:
+  ports:
+  - name: maps
+    port: 80
+    targetPort: 80
+  selector:
+    app: maps

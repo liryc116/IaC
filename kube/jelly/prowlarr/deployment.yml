@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prowlarr
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prowlarr
+  template:
+    metadata:
+      labels:
+        app: prowlarr
+    spec:
+      containers:
+      - image: linuxserver/prowlarr
+        imagePullPolicy: Always
+        name: prowlarr
+        ports:
+        - containerPort: 9696
+          name: web
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        volumeMounts:
+        - mountPath: "/config"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/prowlarr"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata
