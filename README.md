@@ -41,3 +41,9 @@ terraform apply --auto-approve --parallelism=1
 I encountered issues with files being locked while duplicating templates.
 The parallelism=1 parameter ensures only one VM is deployed at a time.
 
+ ## Kubernetes
+
+To deploy from a subfolder simply use :
+```
+kubectl apply -k kube/<subfolder>
+```
