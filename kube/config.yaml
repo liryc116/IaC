@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+  namespace: dashboard
+data:
+  NFS_SERVER: "<NFS SERVER IP>"
+  NFS_PATH_BASE: "/path/to/cluster/volume"
+  INGRESS_TLD: "kube.top.level.domains"
