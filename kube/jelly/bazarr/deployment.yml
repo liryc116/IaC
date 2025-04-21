@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bazarr
+  template:
+    metadata:
+      labels:
+        app: bazarr
+    spec:
+      containers:
+      - image: linuxserver/bazarr
+        imagePullPolicy: Always
+        name: bazarr
+        ports:
+        - containerPort: 6767
+          name: bazarr-tcp
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        volumeMounts:
+        - mountPath: "/config"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/bazarr"
+        - mountPath: "/movies"
+          readOnly: false
+          name: nfs
+          subPath: "media/Films"
+        - mountPath: "/tv"
+          readOnly: false
+          name: nfs
+          subPath: "media/TVShows"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata

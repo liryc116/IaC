@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maps
+  namespace: web-at-home
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maps
+  template:
+    metadata:
+      labels:
+        app: maps
+    spec:
+      #restartPolicy: Never
+      containers:
+      - name: maps
+        image: overv/openstreetmap-tile-server
+        args: [ "run" ]
+          #args: [ "import" ]
+        env:
+          - name: DOWNLOAD_PBF
+            value: "https://download.geofabrik.de/europe/france/ile-de-france-latest.osm.pbf"
+          - name: DOWNLOAD_POLY
+            value: "https://download.geofabrik.de/europe/france/ile-de-france.poly"
+          - name: UPDATES
+            value: "enabled"
+        ports:
+        - containerPort: 80
+          name: maps
+        volumeMounts:
+        - mountPath: "/data/database"
+          readOnly: false
+          name: nfs
+          subPath: "maps"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: web-at-home

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaresolverr
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flaresolverr
+  template:
+    metadata:
+      labels:
+        app: flaresolverr
+    spec:
+      containers:
+      - image: flaresolverr/flaresolverr
+        imagePullPolicy: Always
+        name: flaresolverr
+        ports:
+        - containerPort: 8191
+          name: web
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaresolverr
+  namespace: jelly
+spec:
+  ports:
+  - name: flaresolverr-tcp
+    port: 8191
+    protocol: TCP
+    targetPort: 8191
+  selector:
+    app: flaresolverr

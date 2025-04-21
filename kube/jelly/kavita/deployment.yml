@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kavita
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kavita
+  template:
+    metadata:
+      labels:
+        app: kavita
+    spec:
+      containers:
+      - image: linuxserver/kavita
+        imagePullPolicy: Always
+        name: kavita
+        ports:
+        - containerPort: 5000
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        volumeMounts:
+        - mountPath: "/config"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/kavita"
+        - mountPath: "/manga"
+          readOnly: false
+          name: nfs
+          subPath: "media/Mangas"
+        - mountPath: "/book"
+          readOnly: false
+          name: nfs
+          subPath: "media/Books"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata

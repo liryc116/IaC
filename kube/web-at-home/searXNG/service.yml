@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: searxng
+  namespace: web-at-home
+spec:
+  ports:
+  - name: searxng
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: searxng

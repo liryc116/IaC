@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qbittorrent
+  template:
+    metadata:
+      labels:
+        app: qbittorrent
+    spec:
+      containers:
+      - image: linuxserver/qbittorrent
+        imagePullPolicy: Always
+        name: qbittorrent
+        ports:
+        - containerPort: 8080
+          name: web
+          protocol: TCP
+        - containerPort: 6881
+          name: torrent
+          protocol: TCP
+        - containerPort: 6881
+          name: torrent-udp
+          protocol: UDP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        volumeMounts:
+        - mountPath: "/config"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/qbittorrent"
+        - mountPath: "/downloads"
+          readOnly: false
+          name: nfs
+          subPath: "media/Downloads"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata

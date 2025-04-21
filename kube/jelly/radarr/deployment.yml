@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: radarr
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      nodeSelector:
+        worker: "true"
+      containers:
+      - image: linuxserver/radarr
+        imagePullPolicy: Always
+        name: radarr
+        ports:
+        - containerPort: 7878
+          name: web
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        volumeMounts:
+        - mountPath: "/config"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/radarr"
+        - mountPath: "/movies"
+          readOnly: false
+          name: nfs
+          subPath: "media/Films"
+        - mountPath: "/downloads"
+          readOnly: false
+          name: nfs
+          subPath: "media/Downloads"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata
