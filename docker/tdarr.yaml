@@ -1,0 +1,35 @@
+version: "3.4"
+services:
+  tdarr-node:
+    container_name: tdarr-node
+    image: ghcr.io/haveagitgat/tdarr_node:2.27.02
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Paris
+      - PUID=1000
+      - PGID=1000
+      - UMASK_SET=002
+      - nodeName=Laptop
+      - serverIP=<link to Tdarr instance>
+      - serverPort=80
+      - inContainer=true
+      - ffmpegVersion=6
+
+    volumes:
+      - "./tdarr/AV1 preset.json:/app/configs/AV1 preset.json"
+      - /mnt/media:/media # path to your media to be transcoded
+
+    devices:
+      - /dev/dri:/dev/dri
+    deploy:
+      resources:
+        limits:
+          cpus: "8"
+          memory: 5000M
+            # This should make a Nvidia GPU availabe inside the container but I couldn't make it work
+            #reservations:
+            #devices:
+            #- driver: nvidia
+            #count: all
+            #device_ids: ['0']
+              #capabilities: [gpu]
