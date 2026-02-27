@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  labels:
+    app: tandoor
+  name: tandoor
+
+namespace: web-at-home
+resources:
+- deployment.yml
+- service.yml
+- configmap.yaml
+- secrets.yaml
+- service-account.yaml
+- service-db.yaml
+- sts-postgresql.yaml
+labels:
+- includeSelectors: true
+  pairs:
+    app: tandoor

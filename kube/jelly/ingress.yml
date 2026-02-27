@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx-internal
   rules:
-    - host: "bazarr.kube.lan"
+    - host: "bazarr.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -20,7 +20,7 @@ spec:
                 name: bazarr
                 port :
                   number: 6767
-    - host: "jellyfin.kube.lan"
+    - host: "jellyfin.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -30,7 +30,7 @@ spec:
                 name: jellyfin
                 port :
                   number: 8096
-    - host: "jellyseerr.kube.lan"
+    - host: "jellyseerr.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -40,7 +40,7 @@ spec:
                 name: jellyseerr
                 port :
                   number: 5055
-    - host: "kavita.kube.lan"
+    - host: "kavita.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -50,7 +50,7 @@ spec:
                 name: kavita
                 port :
                   number: 5000
-    - host: "nzbget.kube.lan"
+    - host: "nzbget.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -60,7 +60,7 @@ spec:
                 name: nzbget
                 port :
                   number: 6789
-    - host: "prowlarr.kube.lan"
+    - host: "prowlarr.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -70,7 +70,7 @@ spec:
                 name: prowlarr
                 port :
                   number: 9696
-    - host: "qbittorrent.kube.lan"
+    - host: "qbittorrent.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -80,7 +80,7 @@ spec:
                 name: qbittorrent
                 port :
                   number: 8080
-    - host: "radarr.kube.lan"
+    - host: "radarr.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -90,7 +90,7 @@ spec:
                 name: radarr
                 port :
                   number: 7878
-    - host: "readarr.kube.lan"
+    - host: "readarr.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -100,7 +100,7 @@ spec:
                 name: readarr
                 port :
                   number: 8787
-    - host: "sonarr.kube.lan"
+    - host: "sonarr.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -110,7 +110,7 @@ spec:
                 name: sonarr
                 port :
                   number: 8989
-    - host: "lidarr.kube.lan"
+    - host: "lidarr.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -120,7 +120,7 @@ spec:
                 name: lidarr
                 port :
                   number: 8686
-    - host: "flaresolverr.kube.lan"
+    - host: "flaresolverr.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -130,7 +130,17 @@ spec:
                 name: flaresolverr
                 port :
                   number: 8191
-    - host: "tdarr.kube.lan"
+    - host: "jackett.kube.myblome.home"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jackett
+                port :
+                  number: 9117
+    - host: "tdarr.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -140,7 +150,7 @@ spec:
                 name: tdarr
                 port :
                   number: 8265
-    - host: "tdarr-node.kube.lan"
+    - host: "tdarr-node.kube.myblome.home"
       http:
         paths:
           - path: /

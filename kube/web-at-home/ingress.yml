@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx-internal
   rules:
-    - host: "wikipedia.kube.lan"
+    - host: "wikipedia.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -20,7 +20,7 @@ spec:
                 name: kiwix
                 port :
                   number: 8080
-    - host: "maps.kube.lan"
+    - host: "maps.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -30,7 +30,7 @@ spec:
                 name: maps
                 port :
                   number: 80
-    - host: "searxng.kube.lan"
+    - host: "searxng.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -40,7 +40,7 @@ spec:
                 name: searxng
                 port :
                   number: 8080
-    - host: "fresh-rss.kube.lan"
+    - host: "fresh-rss.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -50,7 +50,7 @@ spec:
                 name: fresh-rss
                 port :
                   number: 80
-    - host: "glance.kube.lan"
+    - host: "glance.kube.myblome.home"
       http:
         paths:
           - path: /
@@ -60,7 +60,7 @@ spec:
                 name: glance
                 port:
                   number: 8080
-    - host: "registry.kube.lan"
+    - host: "registry.kube.myblome.home"
       http:
         paths:
           - path: /
