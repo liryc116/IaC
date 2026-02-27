@@ -1,0 +1,35 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx-internal"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx-internal
+  rules:
+    - host: "recipes.kube.myblome.home"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tandoor
+                port :
+                  number: 8080
+          - path: /media
+            pathType: Prefix
+            backend:
+              service:
+                name: tandoor
+                port :
+                  number: 80
+          - path: /static
+            pathType: Prefix
+            backend:
+              service:
+                name: tandoor
+                port :
+                  number: 80

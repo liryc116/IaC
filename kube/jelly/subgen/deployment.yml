@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subgen
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: subgen
+  template:
+    metadata:
+      labels:
+        app: subgen
+    spec:
+      containers:
+      - image: mccloud/subgen:cpu
+        imagePullPolicy: Always
+        name: subgen
+        resources:
+          limits:
+            cpu: "4"
+          requests:
+            cpu: "4"
+        ports:
+        - containerPort: 9000
+          name: web
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        envFrom:
+        - configMapRef:
+            name: subgen-config
+        volumeMounts:
+        - mountPath: "/TVShows"
+          readOnly: false
+          name: nfs
+          subPath: "media/TVShows"
+        - mountPath: "/Films"
+          readOnly: false
+          name: nfs
+          subPath: "media/Films"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata

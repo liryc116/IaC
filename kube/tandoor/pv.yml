@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-tandoor-static
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs
+  nfs:
+    server: bl-fb-nas03
+    path: "/volume1/k3s-cluster/tandoor/static"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-tandoor-media
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs
+  nfs:
+    server: bl-fb-nas03
+    path: "/volume1/k3s-cluster/tandoor/media"

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jackett
+  namespace: jelly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jackett
+  template:
+    metadata:
+      labels:
+        app: jackett
+    spec:
+      containers:
+      - image: linuxserver/jackett
+        imagePullPolicy: Always
+        name: jackett
+        ports:
+        - containerPort: 9117
+          name: web
+          protocol: TCP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        volumeMounts:
+        - mountPath: "/config"
+          readOnly: false
+          name: nfs
+          subPath: "pods_config/jackett"
+        - mountPath: "/downloads"
+          readOnly: false
+          name: nfs
+          subPath: "media/Downloads"
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: jellydata

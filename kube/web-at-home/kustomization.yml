@@ -5,12 +5,14 @@ metadata:
   namespace: web-at-home
   labels:
     app: web-at-home
+
+namespace: web-at-home
 resources:
   - namespace.yml
   - ingress.yml
   - pv.yml
   - pvc.yml
-    #- kiwix
+  - kiwix
     #- maps
   - searXNG
   - fresh-rss
