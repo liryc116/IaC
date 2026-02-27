@@ -54,6 +54,10 @@ spec:
           readOnly: false
           name: nfs
           subPath: "media/Films"
+        - mountPath: "/temp"
+          readOnly: false
+          name: nfs
+          subPath: "media/Temp"
       volumes:
         - name: nfs
           persistentVolumeClaim:

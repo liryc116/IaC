@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: subgen
+  namespace: jelly
+spec:
+  ports:
+  - name: subgen-web
+    port: 9000
+    protocol: TCP
+    targetPort: 9000
+  selector:
+    app: subgen

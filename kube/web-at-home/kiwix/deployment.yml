@@ -24,7 +24,7 @@ spec:
         - mountPath: "/data"
           readOnly: false
           name: nfs
-          subPath: "zim"
+          subPath: "kiwix"
       volumes:
         - name: nfs
           persistentVolumeClaim:

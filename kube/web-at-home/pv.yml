@@ -5,10 +5,10 @@ metadata:
   namespace: web-at-home
 spec:
   capacity:
-    storage: 200Gi
+    storage: 210Gi
   accessModes:
     - ReadWriteMany
   storageClassName: nfs
   nfs:
-    server: nfs-server
-    path: "cluster-volume/web-at-home"
+    server: bl-fb-nas03
+    path: "/volume1/k3s-cluster/web-at-home"

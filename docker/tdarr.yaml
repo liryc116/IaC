@@ -2,7 +2,7 @@ version: "3.4"
 services:
   tdarr-node:
     container_name: tdarr-node
-    image: ghcr.io/haveagitgat/tdarr_node:2.27.02
+    image: ghcr.io/haveagitgat/tdarr_node:2.45.01
     restart: unless-stopped
     environment:
       - TZ=Europe/Paris
@@ -10,7 +10,7 @@ services:
       - PGID=1000
       - UMASK_SET=002
       - nodeName=Laptop
-      - serverIP=<link to Tdarr instance>
+      - serverIP=tdarr.kube.myblome.home
       - serverPort=80
       - inContainer=true
       - ffmpegVersion=6
