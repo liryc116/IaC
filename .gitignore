@@ -3,3 +3,9 @@
 *.img
 
 *credentials.auto.tfvars
+
+auth_string.txt
+
+*.tfsate
+*.tfsate.backup
+*.lock.hcl
