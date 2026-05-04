@@ -43,7 +43,7 @@ variable "containers" {
     }))
 
     src_file = optional(object({
-      datastore_id = string
+      datastore_id = optional(string, "local")
       file_name    = string
     }))
 
