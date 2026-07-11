@@ -10,5 +10,8 @@ spec:
     - ReadWriteMany
   storageClassName: nfs
   nfs:
-    server: nfs-server
-    path: "cluster-volume/jellydata"
+    server:   "bl-fb-nas03"
+    #server: nfs-server
+    #path: "cluster-volume/jellydata"
+    path:     "/volume1/k3s-cluster/jellydata"
+
