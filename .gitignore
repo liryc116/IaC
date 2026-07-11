@@ -4,8 +4,8 @@
 
 *credentials.auto.tfvars
 
-auth_string.txt
+*.secret
 
-*.tfsate
-*.tfsate.backup
+*.tfstate
+*.tfstate.backup
 *.lock.hcl
