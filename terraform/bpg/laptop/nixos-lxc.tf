@@ -117,6 +117,15 @@ resource "proxmox_virtual_environment_container" "pve_ct" {
     }
   }
 
+  dynamic "mount_point" {
+    for_each = each.value.ct_mount_point
+    content {
+      volume = mount_point.value.volume
+      path   = mount_point.value.path
+      size   = mount_point.value.size
+    }
+  }
+
   initialization {
     hostname = each.value.ct_name
 

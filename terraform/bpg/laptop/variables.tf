@@ -77,7 +77,7 @@ variable "containers" {
     }), {datastore_id = "local", size = 8})
 
     ct_net_ifaces = optional(map(object({
-      name       = optional(string)
+      name       = optional(string, "veth0")
       bridge     = optional(string, "vmbr0")
       enabled    = optional(bool, true)
       firewall   = optional(bool, true)
@@ -86,6 +86,12 @@ variable "containers" {
       vlan_id    = optional(number)
       ipv4_addr  = optional(string, "dhcp") # dhcp blocks ssh
       ipv4_gw    = optional(string)
+    })), {})
+
+    ct_mount_point = optional(map(object({
+      volume     = optional(string, "local")
+      path       = optional(string)
+      size       = optional(string)
     })), {})
 
     ct_user = optional(object({

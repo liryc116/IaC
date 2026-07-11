@@ -1,6 +1,9 @@
 { config, modulesPath, pkgs, lib, ... }:
 {
-  imports = [ (modulesPath + "/virtualisation/proxmox-lxc.nix") ];
+  imports = [
+    (modulesPath + "/virtualisation/proxmox-lxc.nix")
+    ./monitoring.nix
+  ];
 
   nix.settings = { sandbox = false; };
 
