@@ -1,9 +1,11 @@
 { config, lib, pkgs, meta, ... }:
 let
-  ip_address = "your router IP";
+  ip_address = "192.168.0.201";
 in
 {
-  imports = [ ./standard.nix ];
+  imports = [
+    ./standard.nix
+  ];
 
   networking.firewall.allowedTCPPorts = [
     7070 # default web interface port
@@ -15,6 +17,7 @@ in
   services.i2pd = {
     enable = true;
     address = ip_address;
+    logLevel = "warn";
     proto = {
       http = {
         enable = true;
@@ -34,15 +37,25 @@ in
       };
     };
     inTunnels = {
-      website = {
+      ayanami = {
         enable = true;
-        keys = "website-keys.dat";
+        keys = "ayanami-keys.dat";
         inPort = 80;
-        address = "#web server IP";
+        address = "192.168.0.199";
         port = 80;
       };
     };
   };
 
+  services.filebeat.settings = {
+    filebeat.inputs = [
+      {
+        type = "journald";
+        id = "i2pd-journal"; # Unique ID for this input
+        include_matches = [ "_SYSTEMD_UNIT=i2pd.service" ];
+        tags = [ "i2p" "nixos" ];
+      }
+    ];
+  };
 }
 

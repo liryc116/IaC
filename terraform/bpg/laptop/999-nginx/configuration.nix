@@ -16,4 +16,24 @@ in
     };
   };
 
+  services.filebeat.settings.filebeat.inputs =  [
+    {
+      type = "filestream";
+      id = "nginx-logs";
+      paths = [ "/var/log/nginx/error.log*" "/var/log/nginx/ayanami.access.log*"];
+     }
+  ];
+
+  services.filebeat.modules = {
+    nginx = {
+      access = {
+        enabled = true;
+        var.paths = [ "/path/to/log/nginx/access.log*" ];
+      };
+      error = {
+        enabled = true;
+        var.paths = [ "/path/to/log/nginx/error.log*" ];
+      };
+    };
+  };
 }
