@@ -5,6 +5,7 @@
 *credentials.auto.tfvars
 
 *.secret
+*secret*
 
 *.tfstate
 *.tfstate.backup
